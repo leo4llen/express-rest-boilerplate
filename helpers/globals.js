@@ -2,15 +2,14 @@ function globals() {
     require('dotenv').config();
     /* Props */
 
-    const env = process.env.TYPE;
+    const env = process.env.NODE_ENV;
 
-    const log = (...entities) => {
-        return env !== 'live' ? console.log(...entities) : undefined;
-    }
 
     /* Exported object */
     const globalObject = {
-        log,
+        log: (...entities) => {
+            return env !== 'live' ? console.log(...entities) : undefined;
+        },
 
     };
 

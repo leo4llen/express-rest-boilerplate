@@ -9,6 +9,13 @@ const helmet = require('helmet');
 const glob = require("glob");
 const db = require('mongoose');
 const cors = require("cors");
+const compression = require('compression');
+const chalk = require('chalk')
+
+/* Global helpers */
+const gg = require('./helpers/globals');
+/* Auth middlewares */
+const auth = require('./helpers/auth');
 
 /* Database setup */
 
@@ -16,9 +23,9 @@ const dbUri = process.env.DBuri;
 
 db.connect(dbUri, (err) => {
     if (err) {
-        console.log(err);
+        gg.log();
     } else {
-        console.log('DB connected!');
+        gg.log('DB connected!');
     }
 });
 
@@ -68,14 +75,14 @@ const apiRouter = express.Router();
 app.use(morgan('dev'));
 
 /* Fetch router files and apply them to our routers */
-glob('./routes/*.routes.js', null, (err, files) => {
+glob('./routes/*.routesr.js', null, (err, files) => {
     files.forEach((path) => {
         require('.' + path)(openRouter, apiRouter)
     });
 });
 
 /* Applying middleware to protected routes */
-apiRouter.use(auth.verfiyToken);
+apiRouter.use(auth.gateKeep);
 
 /* Registering our routes */
 app.use('/api', apiRouter);
