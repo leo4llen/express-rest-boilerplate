@@ -1,0 +1,19 @@
+{
+  "name": "express-rest-boilerplate",
+  "version": "1.0.0",
+  "description": "A simple boilerplate for REST API based apps",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lech4rm/express-rest-boilerplate.git"
+  },
+  "author": "Leo Allen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lech4rm/express-rest-boilerplate/issues"
+  },
+  "homepage": "https://github.com/lech4rm/express-rest-boilerplate#readme"
+}
