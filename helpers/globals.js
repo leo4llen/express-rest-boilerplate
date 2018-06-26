@@ -1,3 +1,6 @@
+require('dotenv').config();
+const chalk = require('chalk')
+
 function globals() {
     require('dotenv').config();
     /* Props */
@@ -9,12 +12,11 @@ function globals() {
     const globalObject = {
         log: (...entities) => {
             return env !== 'live' ? console.log(...entities) : undefined;
-        },
+        }
 
     };
 
     return Object.freeze(globalObject);
 }
 
-
-module.exports(globals())
+module.exports = globals()

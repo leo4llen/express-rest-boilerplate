@@ -1,13 +1,13 @@
 const index = require('../controllers/index.controller')
 
-module.exports = (openRoutes, apiRoutes) => {
+module.exports = (openRouter, apiRouter) => {
 
     /* Open routes */
-    apiRoutes.route('/helloWorld')
+    openRouter.route('/helloWorld')
         .get(index.helloWorld);
 
     /* Protected routes */
-    openRoutes.route('/helloWorld')
+    apiRouter.route('/helloWorld')
         .get(index.helloWorld);
 
 }

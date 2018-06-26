@@ -1,5 +1,4 @@
 'use strict';
-require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -7,29 +6,26 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const glob = require("glob");
-const db = require('mongoose');
 const cors = require("cors");
 const compression = require('compression');
 const chalk = require('chalk')
 
 /* Global helpers */
 const gg = require('./helpers/globals');
+const config = require('./helpers/config');
 /* Auth middlewares */
 const auth = require('./helpers/auth');
 
 /* Database setup */
 
-const dbUri = process.env.DBuri;
-
-db.connect(dbUri, (err) => {
-    if (err) {
-        gg.log();
-    } else {
-        gg.log('DB connected!');
-    }
+config.dbConnect().then((resp) => {
+    gg.log(chalk.green(resp))
+}).catch((err) => {
+    gg.log(chalk.red(err))
 });
-
 mongoose.Promise = Promise;
+
+
 app.enable('trust proxy');
 
 
@@ -75,9 +71,9 @@ const apiRouter = express.Router();
 app.use(morgan('dev'));
 
 /* Fetch router files and apply them to our routers */
-glob('./routes/*.routesr.js', null, (err, files) => {
+glob('./routes/*.router.js', null, (err, files) => {
     files.forEach((path) => {
-        require('.' + path)(openRouter, apiRouter)
+        require(path)(openRouter, apiRouter)
     });
 });
 
@@ -86,6 +82,6 @@ apiRouter.use(auth.gateKeep);
 
 /* Registering our routes */
 app.use('/api', apiRouter);
-app.use(openRouter);
+app.use('/', openRouter);
 
 module.exports = app;
