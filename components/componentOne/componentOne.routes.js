@@ -1,4 +1,4 @@
-function componentOneRoutes(prefix) {
+function componentOneRoutes() {
   const _ctrl = require("./componentOne.controller");
   const { routePrefix } = require("../../utils");
   const openRouter = routePrefix();
@@ -10,4 +10,4 @@ function componentOneRoutes(prefix) {
   };
 }
 
-module.exports = componentOneRoutes("/one");
+module.exports = componentOneRoutes();
