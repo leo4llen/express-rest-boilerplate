@@ -1,12 +1,11 @@
 function componentOneRoutes() {
-  const _ctrl = require("./componentOne.controller");
+  const ctrl = require("./componentOne.controller");
   const { routePrefix } = require("../../utils");
-  const openRouter = routePrefix();
 
   return (open, closed) => {
-    open("/index").get(_ctrl.doSomething);
+    open("/index").get(ctrl.doSomething);
 
-    closed("/index").get(_ctrl.doSomethingElse);
+    closed("/index").get(ctrl.doSomethingElse);
   };
 }
 

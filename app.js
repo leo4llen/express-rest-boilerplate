@@ -19,17 +19,6 @@ app.use(
   })
 );
 
-app.use(function(error, req, res, next) {
-  if (error instanceof SyntaxError) {
-    res.json({
-      errorTag: error.status,
-      message: "invalid syntax"
-    });
-  } else {
-    next();
-  }
-});
-
 app.use(
   bodyParser.urlencoded({
     limit: "50mb",
@@ -49,6 +38,8 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 
+require("./utils/errorHandler")(app);
+
 /* REGISTER ROUTES HERE */
 
 /* APIs which don't require authentication */
@@ -59,14 +50,12 @@ const apiRouter = express.Router();
 /* Log requests to console */
 app.use(morgan("dev"));
 
-//FIXME: Nothing works MAHHNN !!
-
 /* Fetch router files and apply them to our routers */
 glob("./components/*", null, (err, items) => {
   items.forEach(component => {
     require(component).routes(
-      routePrefix(openRouter)("asd"),
-      routePrefix(apiRouter)("asda")
+      routePrefix(openRouter)(component.prefix),
+      routePrefix(apiRouter)(component.prefix)
     );
   });
 });

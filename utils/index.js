@@ -1,13 +1,13 @@
 function utils() {
+  const { log } = require("./logging");
+
   const methods = {
-    /** Decorator fn to prefix router path's
-     * @param  {Function} router.route
-     * @returns {Function}
+    /** Add Decorator fn to prefix router path's
+     * @param  {Object} router
+     * @returns {Object} router
      */
-    routePrefix: router => prefix =>
-      function(route) {
-        return router.route.call(this, `${prefix}${route}`);
-      }
+    routePrefix: router => prefix => route =>
+      router.route.call(router, `${prefix}${route}`)
   };
 
   return Object.freeze(methods);
