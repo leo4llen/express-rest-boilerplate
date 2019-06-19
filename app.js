@@ -9,6 +9,9 @@ const glob = require('glob')
 const cors = require('cors')
 const { routePrefix } = require('./utils')
 
+// Connect to DB
+require('./config/db')
+
 app.enable('trust proxy')
 /* Protecting headers */
 app.use(helmet())
@@ -35,7 +38,7 @@ app.use((req, res, next) => {
 app.use(cors())
 
 /* Apply error handlers to app */
-require('./utils/errorHandler')(app)
+require('./utils').errorHandler(app)
 
 /* Log requests to console */
 app.use(morgan('dev'))
@@ -48,10 +51,7 @@ const apiRouter = express.Router() // Protected routes
 /* Fetch router files and apply them to our routers */
 glob('./components/*', null, (err, items) => {
   items.forEach(component => {
-    require(component).routes(
-      routePrefix(openRouter)(component.prefix),
-      routePrefix(apiRouter)(component.prefix)
-    )
+    if (require(component).routes) require(component).routes(openRouter, apiRouter)
   })
 })
 
