@@ -3,11 +3,9 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-const mongoose = require('mongoose')
 const helmet = require('helmet')
 const glob = require('glob')
 const cors = require('cors')
-const { routePrefix } = require('./utils')
 const { verifyToken } = require('./components/auth').ctrl
 // Connect to DB
 require('./config/db')
