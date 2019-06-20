@@ -1,25 +1,21 @@
-const { error } = require('../../utils').logging
-const { success, fail } = require('../../utils').response
-function componentOneCtrl(model) {
+require('dotenv')
+
+const { fail } = require('../../utils').response
+
+function authentication() {
   const methods = {
-    doSomething: async (req, res) => {
-      try {
-        return success(res, 200, 'Route works')
-      } catch (e) {
-        error(e)
-        return fail(res, 500)
-      }
-    },
-    doSomethingElse: async (req, res) => {
-      try {
-        return success(res, 200, 'Route works')
-      } catch (e) {
-        error(e)
-        return fail(res, 500)
+    verifyToken: async (req, res, next) => {
+      let token = req.headers['x-access-token']
+
+      if (!token) return fail(res, 401, 'Access token missing')
+      // Replace real time auth logic here
+      if (token === 'ValidTestToken') {
+        next()
+      } else {
+        return fail(res, 401, 'Invalid/Expired access token')
       }
     }
   }
   return Object.freeze(methods)
 }
-
-module.exports = componentOneCtrl()
+module.exports = authentication()

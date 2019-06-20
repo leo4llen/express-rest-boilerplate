@@ -1,6 +1,5 @@
 function componentOneRoutes() {
   const ctrl = require('./component.controller')
-
   return (open, closed) => {
     open.route('/index').get(ctrl.doSomething)
 

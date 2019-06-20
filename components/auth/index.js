@@ -1,3 +1,3 @@
 module.exports = Object.freeze({
-  ctrl: require('./component.controller')
+  ctrl: require('./auth.controller')
 })

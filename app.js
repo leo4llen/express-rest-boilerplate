@@ -8,7 +8,7 @@ const helmet = require('helmet')
 const glob = require('glob')
 const cors = require('cors')
 const { routePrefix } = require('./utils')
-
+const { verifyToken } = require('./components/auth').ctrl
 // Connect to DB
 require('./config/db')
 
@@ -47,6 +47,8 @@ app.use(morgan('dev'))
 
 const openRouter = express.Router() // Open routes
 const apiRouter = express.Router() // Protected routes
+
+apiRouter.use(verifyToken)
 
 /* Fetch router files and apply them to our routers */
 glob('./components/*', null, (err, items) => {

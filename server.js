@@ -8,6 +8,11 @@ const port = process.env.PORT || 3000
 const app = require('./app')
 const { log, info, error } = require('./utils').logging
 
+// Graceful shutdown
+process.on('SIGINT', () => {
+  process.exit(1)
+})
+
 if (process.env.NODE_ENV === 'development') {
   app.listen(port, () => {})
 } else {
