@@ -1,11 +1,11 @@
 const { join } = require('path')
 
-require('dotenv').config({ path: join(__dirname, `${process.argv[2]}`) })
+require('dotenv').config({ path: join(__dirname, `../${process.argv[2]}`) })
 
 const cluster = require('cluster')
 const numCPUs = require('os').cpus().length || 1
 const port = process.env.PORT || 3000
-const app = require('./app')
+const app = require('./index')
 const { log, info, error } = require('./utils').logging
 
 // Graceful shutdown

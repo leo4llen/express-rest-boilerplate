@@ -6,7 +6,7 @@ const morgan = require('morgan')
 const helmet = require('helmet')
 const glob = require('glob')
 const cors = require('cors')
-const { verifyToken } = require('./components/auth').ctrl
+const { verifyToken } = require('./app/modules/auth').ctrl
 // Connect to DB
 require('./config/db')
 
@@ -49,7 +49,7 @@ const apiRouter = express.Router() // Protected routes
 apiRouter.use(verifyToken)
 
 /* Fetch router files and apply them to our routers */
-glob('./components/*', null, (err, items) => {
+glob('./app/*', null, (err, items) => {
   items.forEach(component => {
     if (require(component).routes) require(component).routes(openRouter, apiRouter)
   })

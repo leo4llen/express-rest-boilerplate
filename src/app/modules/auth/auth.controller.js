@@ -1,6 +1,6 @@
 require('dotenv')
 
-const { fail } = require('../../utils').response
+const { fail } = require('../../../utils').response
 
 function authentication() {
   const methods = {
