@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const { log, error, info } = require('../utils').logging
 
 function connectDb() {
-  console.log(process.env.DBuri)
   mongoose.connect(process.env.DBuri)
 
   mongoose.connection.on('connected', function() {

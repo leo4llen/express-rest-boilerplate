@@ -7,7 +7,7 @@ const helmet = require('helmet')
 const glob = require('glob')
 const cors = require('cors')
 const { verifyToken } = require('./app/modules/auth').ctrl
-// Connect to DB
+
 require('./config/db')
 
 app.enable('trust proxy')
