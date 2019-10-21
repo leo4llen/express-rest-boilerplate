@@ -1,9 +1,7 @@
-const { error } = require('./logging')
-
-function errorHandler(app) {
+export default function errorHandler(app) {
   app.use(function(err, req, res, next) {
     if (err) {
-      error(err.stack)
+      console.log(err)
       res.status(500).json({
         message: process.env.NODE_ENV === 'dev' ? err.stack : 'Something went wrong'
       })
@@ -11,6 +9,5 @@ function errorHandler(app) {
       next()
     }
   })
+  return app
 }
-
-module.exports = errorHandler

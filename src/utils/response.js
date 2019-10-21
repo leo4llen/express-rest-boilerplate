@@ -1,31 +1,24 @@
-function response() {
-  const methods = {
-    success: (res, status, message = 'success', data = null) => {
-      return res.status(status).json({
-        status,
+function response(ctx) {
+  const {
+    LOG: { error }
+  } = ctx
+
+  const RESPONSE = {
+    success(res, statusCode = 200, message = 'Success', data = null) {
+      return res.status(statusCode).json({
+        statusCode,
         message,
         data,
-        err: null
+        error: null
       })
     },
-    fail: (res, status, message = '', err = {}) => {
-      const errors = {
-        400: 'Invalid Input',
-        500: 'Internal server error',
-        403: 'Forbidden',
-        401: 'UnAuthorized Access'
-      }
-      message = message ? message : errors[status]
-      return res.status(status).json({
-        status,
-        message,
-        data: null,
-        err
-      })
+    internalError(res, err = null, message = 'Internal server error') {
+      error(err)
+      return res.boom.badImplementation(message)
     }
   }
-
-  return Object.freeze(methods)
+  ctx.RESPONSE = Object.freeze(RESPONSE)
+  return ctx
 }
 
-module.exports = response()
+export default response

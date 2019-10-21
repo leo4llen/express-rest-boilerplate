@@ -1,15 +1,20 @@
-const chalk = require('chalk')
+import chalk from 'chalk'
 
-function logs() {
-  const methods = {
-    print: type => (...msg) =>
-      process.env.NODE_ENV === 'development' ? console.log(chalk[type](...msg)) : undefined,
-    log: (...msg) => methods.print('green')(...msg),
-    info: (...msg) => methods.print('blue')(...msg),
-    error: (...msg) => methods.print('red')(...msg)
+function logs(ctx) {
+  function _print(type) {
+    return (...msg) =>
+      process.env.NODE_ENV !== 'production'
+        ? console.log(...msg.map(x => (typeof x === 'object' ? x : chalk[type](x))))
+        : undefined
   }
-
-  return Object.freeze(methods)
+  const LOG = {
+    log: (...msg) => _print('green')(...msg),
+    info: (...msg) => _print('blue')(...msg),
+    error: (...msg) => _print('red')(...msg),
+    pretty: (...msg) => _print('blue')(...msg.map(x => JSON.stringify(x, null, 2)))
+  }
+  ctx.LOG = Object.freeze(LOG)
+  return ctx
 }
 
-module.exports = logs()
+export default logs
