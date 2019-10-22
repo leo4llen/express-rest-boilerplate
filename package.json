@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/lech4rm/express-rest-boilerplate#readme",
   "dependencies": {
+    "@hapi/joi": "^16.1.7",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "compression": "^1.7.2",

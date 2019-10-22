@@ -1,24 +1,29 @@
+import UserModels from './models'
+
 export default function userCtrl(ctx) {
   const {
     RESPONSE: { success, internalError }
   } = ctx
+
+  const { User } = UserModels(ctx)
+
   const methods = {
-    async create(req, res) {
+    async read(req, res) {
       try {
-        return success(res)
+        let users = await User.query().findUsers(req)
+        return success(res, 200, 'Users loaded successfully', users)
       } catch (e) {
         return internalError(res, e)
       }
     },
-    async read(req, res) {
+    async create(req, res) {
       try {
-      } catch (e) {}
-    },
-    async update(req, res) {
-      try {
-      } catch (e) {}
-    },
-    async delete(req, res) {}
+        await User.query().createUser(req)
+        return success(res, 200, 'User inserted successfully')
+      } catch (e) {
+        return internalError(res, e)
+      }
+    }
   }
   return Object.freeze(methods)
 }

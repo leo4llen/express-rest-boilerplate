@@ -7,8 +7,8 @@ app.enable('trust proxy')
 
 middlewares(app)
 
-app.listen(1337, () => {
-  console.log('app is listening')
+app.listen(process.env.PORT, () => {
+  console.log(`Server is listening on ${process.env.PORT}`)
 })
 
 export default app

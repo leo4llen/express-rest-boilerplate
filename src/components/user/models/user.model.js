@@ -5,7 +5,10 @@ export default function UserModel(ctx) {
 
   class UserQueries extends QueryBuilder {
     findUsers(req) {
-      this.where({ status: 1 }).select('id', 'name', 'age')
+      return this.where({ status: 1 }).select('name')
+    }
+    createUser(req) {
+      return this.insert({ name: req.body.name })
     }
   }
 
