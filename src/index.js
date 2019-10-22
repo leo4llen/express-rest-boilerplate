@@ -11,4 +11,8 @@ app.listen(process.env.PORT, () => {
   console.log(`Server is listening on ${process.env.PORT}`)
 })
 
+process.on('SIGINT', () => {
+  process.exit(1)
+})
+
 export default app
