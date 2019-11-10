@@ -2,7 +2,7 @@
   "name": "express-rest-boilerplate",
   "version": "1.0.0",
   "description": "A simple boilerplate for REST API based apps",
-  "main": "app.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "npx nodemon --exec babel-node src/index.js .env.dev",
     "build-dev": "npx babel src --out-dir dist",
